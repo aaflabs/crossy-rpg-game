@@ -1,6 +1,6 @@
-# Pygame development 4
-# Focus on making code object oriented
-# Introduce classes and objects into our code
+# Pygame development 5
+# Implement game classes
+# Implement generic game object class
 
 # Gain access to the pygame library
 import pygame
@@ -20,6 +20,7 @@ class Game:
     # Typical rate of 60, equivalent to FPS
     TICK_RATE = 60
 
+    # Initializer for the game class to set up the with, height and title
     def __init__(self, title, width, height) -> None:
         self.title = title
         self.width = width
@@ -58,14 +59,24 @@ new_game = Game(SCREEN_TITLE,SCREEN_WITH,SCREEN_HEIGHT)
 
 new_game.run_game_loop()
 
+class GameObject:
+
+    def __init__(self, image_path, x, y, width, height) -> None:
+        object_image = pygame.image.load(image_path)
+        # Scale the image up
+        self.image = pygame.transform.scale(object_image, (width, height))
+
+        self.x_pos = x
+        self.y_pos = y
+
+    def draw(self, background):
+        background.blit(self.image, (self.x_pos, self.y_pos))
+
 # Quit pygame and the program
 pygame.quit()
 quit()
 
-# Load the player image from the file directory
-# player_image = pygame.image.load('player.png')
-# Scale the image up
-# player_image = pygame.transform.scale(player_image, (50, 50))
+
 
 # Draw a rectangle on top of the game screen canvas (x, y, with,height)
 # pygame.draw.rect(game_screen, BLACK_COLOR, [350, 350, 100, 100])
