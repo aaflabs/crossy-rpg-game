@@ -1,6 +1,6 @@
-# Pygame development 9
-# Add true end game conditions
-# Implement specific win and lose conditions
+# Pygame development 10
+# Make the game more interesting
+# Add more enemies and make them move faster
 
 # Gain access to the pygame library
 from typing import Text
@@ -39,14 +39,25 @@ class Game:
         background_image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(background_image, (width, height))
 
-    def run_game_loop(self):
+    def run_game_loop(self, speed_level):
 
         is_game_over = False
         did_win = False
         direction = 0
 
         player_character = PlayerCharacter('player.png', 375, 700, 50, 50)
-        enemy_0 = NonPlayerCharacter('enemy.png', 20, 400, 50, 50)
+        enemy_0 = NonPlayerCharacter('enemy.png', 20, 600, 50, 50)
+        # Speed increased as we advance in difficulty
+        enemy_0.SPEED *= speed_level
+
+        # Create another enemy
+        enemy_1 = NonPlayerCharacter('enemy.png', self.width - 40, 400, 50, 50)
+        enemy_1.SPEED *= speed_level
+
+        # Create another enemy
+        enemy_2 = NonPlayerCharacter('enemy.png', 20, 200, 50, 50)
+        enemy_2.SPEED *= speed_level
+
         treasure = GameObject('treasure.png', 375, 50, 50, 50)
        
         # Main game loop, used to update all gameplay such as movement, checks,
@@ -87,8 +98,19 @@ class Game:
             # Draw the player at the new position
             player_character.draw(self.game_screen)
  
+            # Move and draw the enemy character
             enemy_0.move(self.width)
             enemy_0.draw(self.game_screen)
+
+            # Move and draw more enemies when we reach higher levels of difficulty
+            if speed_level > 2:
+                enemy_1.move(self.width)
+                enemy_1.draw(self.game_screen)
+            
+            if speed_level > 4:
+                enemy_2.move(self.width)
+                enemy_2.draw(self.game_screen)
+
 
             # End game if collision between enemy and treasure
             # Close game if we lose
@@ -118,7 +140,7 @@ class Game:
         # Restart game loop if we won
         # Break out of game loop and quit if we lose
         if did_win:
-            self.run_game_loop()
+            self.run_game_loop(speed_level + 0.5)
         else:
             return
 
@@ -143,7 +165,7 @@ class GameObject:
 class PlayerCharacter(GameObject):
 
     # How many tiles the character moves per second
-    SPEED = 10
+    SPEED = 5
 
     def __init__(self, image_path, x, y, width, height) -> None:
         super().__init__(image_path, x, y, width, height)
@@ -178,7 +200,7 @@ class PlayerCharacter(GameObject):
 class NonPlayerCharacter(GameObject):
 
     # How many tiles the character moves per second
-    SPEED = 10
+    SPEED = 5
 
     def __init__(self, image_path, x, y, width, height) -> None:
         super().__init__(image_path, x, y, width, height)
@@ -196,7 +218,7 @@ pygame.init()
 
 new_game = Game('background.png',SCREEN_TITLE,SCREEN_WITH,SCREEN_HEIGHT)
 
-new_game.run_game_loop()
+new_game.run_game_loop(1)
 
 # Quit pygame and the program
 pygame.quit()
