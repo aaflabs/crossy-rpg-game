@@ -36,6 +36,7 @@ class Game:
         self.game_screen.fill(WHITE_COLOR)
         pygame.display.set_caption(title)
 
+        # Load and set the background image for the scene
         background_image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(background_image, (width, height))
 
@@ -60,7 +61,7 @@ class Game:
 
         treasure = GameObject('treasure.png', 375, 50, 50, 50)
        
-        # Main game loop, used to update all gameplay such as movement, checks,
+        # Main game loop, used to update all gameplay such as movement, checks, and graphics
         # Runs until is_game_over = True
         while not is_game_over:
 
@@ -225,9 +226,15 @@ pygame.quit()
 quit()
 
 
-# Draw a rectangle on top of the game screen canvas (x, y, with,height)
-# pygame.draw.rect(game_screen, BLACK_COLOR, [350, 350, 100, 100])
-# Draw a circle on top of the game screen (x, y, radius)
-# pygame.draw.circle(game_screen, BLACK_COLOR, (400, 300), 50)
+# Load the player image from the file directory
+# player_image = pygame.image.load('player.png')
+# Scale the image up
+# player_image = pygame.transform.scale(player_image, (50, 50))
 
-# game_screen.blit(player_image, (375, 375))
+# Draw a rectangle on top of the game screen canvas (x, y, with,height)
+    # pygame.draw.rect(game_screen, BLACK_COLOR, [350, 350, 100, 100])
+    # Draw a circle on top of the game screen (x, y, radius)
+    # pygame.draw.circle(game_screen, BLACK_COLOR, (400, 300), 50)
+
+    # Draw the player image on top of the screen at (x,y) position
+    # game_screen.blit(player_image, (375, 375))
